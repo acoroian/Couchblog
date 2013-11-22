@@ -1,7 +1,7 @@
 class Category < CouchRest::Model::Base
   
   extend ActiveModel::Naming
-  # extend CouchConfig::DatabaseFromThread
+  extend CouchConfig::DatabaseFromThread
   
   property :slug
   property :name

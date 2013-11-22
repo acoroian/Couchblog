@@ -15,3 +15,4 @@ gem "mongrel"
 gem "couchrest_model"
 gem 'rails3-generators', :git => 'git://github.com/shenoudab/rails3-generators.git'
 gem 'orm_adapter_couchrest_model'
+gem 'debugger'

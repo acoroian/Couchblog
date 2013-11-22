@@ -2,7 +2,7 @@
 
 <h1 class="main-title">LOGIN</h1>
 
-<%= form_for resource_name, resource, :url => session_path(resource_name) do |f| -%>
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
   <b>Email</b>
   <p><%= f.text_field :email %></p>
 

@@ -1,27 +1,39 @@
 class User < CouchRest::Model::Base
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
 
-  devise :database_authenticatable, :registerable, :timeoutable
+  # Setup accessible (or protected) attributes for your model
+  # attr_accessible :email, :password, :password_confirmation, :remember_me
 
   # extend DeviseOverrides::SessionSerializer
   # extend ActiveModel::Naming
   # extend CouchConfig::DatabaseFromThread
+  use_database COUCH_DB
 
   property :username
   property :slug
   property :email
   property :time_zone, :default => "Pacific Time (US & Canada)"
-  property :password_salt
-  property :encrypted_password
+  property :password
+  property :password_confirmation
+  property :remember_me
 
-# design do
+ design do
 #   # view :slug
 #   # view :member_name
-#   # view :email
+    view :email,
+    :map => 
+      "function(doc) {
+        if ((doc['couchrest-type'] == 'User') && (doc['status'] == 'Active')) {
+          emit(doc['email'], null);
+        }
+      }"
 #   # view :_id
 
 #   # view :created_at, :descending => true
-# end
-
+ end
   timestamps!
 
   before_save :downcase_email
